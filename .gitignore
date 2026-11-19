@@ -1,0 +1,36 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# RAG / local data (do not commit course PDFs or vector DB)
+data/
+chroma_db/
+*.bin
+*.pkl
+
+# Course materials — keep local only (copyrighted books / notes)
+docs/
+materials/
+*.pdf
+*.docx
+*.doc
+*.pptx
+*.rar
+*.zip
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.log
