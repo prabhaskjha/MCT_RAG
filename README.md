@@ -2,11 +2,13 @@
 
 Retrieval-Augmented Generation assistant for the MBA **MCT** (Managing Change / Transformation) course. It indexes your local lecture notes and prescribed book, answers questions with citations, and can optionally search the internet. Use a **local LLM** via [Ollama](https://ollama.com) or a **cloud** model (OpenAI / Gemini).
 
-> Course PDFs and DOCX files stay on your machine. This repo ships only the app code — do not commit copyrighted textbooks.
+> Course PDFs and DOCX files stay on your machine. This repo ships only the app code — **do not commit copyrighted textbooks**, OCR caches, or the Chroma vector DB.
 
 ## Features
 
 - Index PDF / DOCX / TXT / MD under a configurable folder (defaults to `C:\MBA\MBA\TERM-III\MCT\MCT`)
+- Supports the prescribed book (*The Challenge of Organizational Change*, Kanter et al.) **when you have the PDF locally**
+- OCR for scanned PDFs (RapidOCR), with local cache under `data/ocr_cache/`
 - Local LLM: Ollama (e.g. `llama3.2`, `qwen2.5:7b`, `gemma3:4b`)
 - Cloud LLM: OpenAI or Google Gemini
 - Embeddings: Ollama `nomic-embed-text`, local MiniLM, or OpenAI
@@ -45,10 +47,21 @@ streamlit run app.py
 
 In the sidebar:
 
-1. Confirm **Course materials folder** points at `C:\MBA\MBA\TERM-III\MCT\MCT` (slide handouts + prescribed book).
+1. Confirm **Course materials folder** points at the folder that contains:
+   - `MCT slide handouts … .pdf`
+   - `The challenge of organizational change … .pdf` (Kanter book)
 2. Pick **Local (Ollama)** or a cloud provider.
-3. Click **Build / rebuild index** once (first run can take several minutes for large PDFs).
+3. Click **Build / rebuild index**.
+   - First run OCRs scanned pages (can take a long time for the ~550-page book).
+   - Later rebuilds reuse `data/ocr_cache/` and mainly re-embed — much faster.
 4. Ask questions. Toggle **Also search the internet** when you want external context.
+
+### Sharing with another user
+
+1. They clone this repo (app only).
+2. They place **their own** copy of the MCT materials (slides + book) in a local folder.
+3. They point the sidebar at that folder and build the index.
+4. Do **not** upload the book PDF, OCR JSON, or `data/chroma/` to GitHub.
 
 ## Project layout
 
